@@ -1,100 +1,155 @@
 <!DOCTYPE html>
-<html lang="my">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>❤️ For You ❤️</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You 💖</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-<style>
-body{
-margin:0;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-background:linear-gradient(135deg,#ff4d6d,#ff85a2);
-font-family:Arial,sans-serif;
-overflow:hidden;
-}
+        body {
+            background-color: #ffe6eb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            text-align: center;
+        }
 
-.card{
-background:white;
-padding:30px;
-border-radius:20px;
-text-align:center;
-box-shadow:0 0 20px rgba(0,0,0,.3);
-animation:pop 1s;
-}
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 90%;
+            position: relative;
+        }
 
-h1{
-color:#ff3366;
-}
+        h1 {
+            color: #ff4a75;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
 
-button{
-padding:12px 25px;
-border:none;
-border-radius:30px;
-background:#ff3366;
-color:white;
-font-size:18px;
-cursor:pointer;
-}
+        p {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
 
-button:hover{
-background:#ff0044;
-}
+        .gif-container img {
+            width: 150px;
+            margin-bottom: 20px;
+        }
 
-@keyframes pop{
-from{transform:scale(.5);opacity:0;}
-to{transform:scale(1);opacity:1;}
-}
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            height: 50px;
+            position: relative;
+        }
 
-.heart{
-position:absolute;
-color:red;
-animation:float 6s linear infinite;
-}
+        button {
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
 
-@keyframes float{
-0%{transform:translateY(100vh);}
-100%{transform:translateY(-100px);}
-}
-</style>
+        #yesBtn {
+            background-color: #ff4a75;
+            color: white;
+        }
+
+        #yesBtn:hover {
+            background-color: #e0355f;
+            transform: scale(1.1);
+        }
+
+        #noBtn {
+            background-color: #858585;
+            color: white;
+            position: absolute;
+            left: 55%;
+        }
+
+        /* Celebrate Screen */
+        .hidden {
+            display: none;
+        }
+
+        .celebrate h1 {
+            font-size: 2.2rem;
+            animation: bounce 1s infinite alternate;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="card">
-<h1>❤️ Hello ❤️</h1>
-<p>မင်းကို ဒီနေ့ ပြုံးစေချင်လို့ ဒီ Page လေးလုပ်ထားတာ။</p>
+    <div class="container" id="mainContainer">
+        <div class="gif-container">
+            <!-- ချစ်စရာကောင်းတဲ့ GIF ပုံလေး -->
+            <img src="https://media.tenor.com/t776V5B26XIAAAAi/cute-bear.gif" alt="Cute Bear">
+        </div>
+        <h1>ငါ့ကို ချစ်လား? 🥺👉👈</h1>
+        <p>တကယ်မေးတာနော်...</p>
+        
+        <div class="btn-group">
+            <button id="yesBtn" onclick="selectYes()">ချစ်တယ်</button>
+            <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">မချစ်ဘူး</button>
+        </div>
+    </div>
 
-<button onclick="showLove()">Click Me 💖</button>
+    <!-- Yes နှိပ်ပြီးရင် ပေါ်လာမယ့် စာမျက်နှာ -->
+    <div class="container hidden" id="celebrateContainer">
+        <div class="gif-container">
+            <img src="https://media.tenor.com/g9vN645Yv6sAAAAi/onload-unbothered.gif" alt="Happy Dance">
+        </div>
+        <h1>Yeayyyyy!!! 🎉💖</h1>
+        <p>ငါလည်း အရမ်းချစ်တယ်နော်! ဓာတ်ပုံလေး ရိုက်ပြီး လာပြဦး ဟီးး။</p>
+    </div>
 
-<h2 id="love"></h2>
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const mainContainer = document.getElementById('mainContainer');
+        const celebrateContainer = document.getElementById('celebrateContainer');
 
-</div>
+        // "No" ခလုတ်ကို ထိလိုက်တာနဲ့ ထွက်ပြေးမယ့် Function
+        function moveButton() {
+            // Container ရဲ့ အကျယ်အဝန်းကို တွက်ချက်ခြင်း
+            const containerWidth = mainContainer.clientWidth;
+            const containerHeight = mainContainer.clientHeight;
 
-<script>
+            // ခလုတ်ကို ရွေ့စေမည့် Random နေရာအသစ် သတ်မှတ်ခြင်း
+            const newX = Math.random() * (containerWidth - noBtn.clientWidth - 40);
+            const newY = Math.random() * (containerHeight - noBtn.clientHeight - 80);
 
-function showLove(){
-document.getElementById("love").innerHTML="I Love You ❤️";
-}
+            // စတိုင်ကို ပြောင်းလဲခြင်း
+            noBtn.style.left = `${newX}px`;
+            noBtn.style.top = `${newY}px`;
+        }
 
-setInterval(()=>{
-let heart=document.createElement("div");
-heart.innerHTML="❤️";
-heart.className="heart";
-heart.style.left=Math.random()*100+"vw";
-heart.style.fontSize=(20+Math.random()*30)+"px";
-document.body.appendChild(heart);
-
-setTimeout(()=>{
-heart.remove();
-},6000);
-
-},300);
-
-</script>
-
+        // "Yes" ကို နှိပ်လိုက်ရင်
+        function selectYes() {
+            mainContainer.classList.add('hidden');
+            celebrateContainer.classList.remove('hidden');
+        }
+    </script>
 </body>
 </html>
